@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI DateSecurity - Ваш ИИ-щит от цифровых угроз</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #0a0a23; 
+            color: #fff; 
+            line-height: 1.6; 
+            overflow-x: hidden; /* Предотвращаем горизонтальный скролл */
+        }
+        header { 
+            background: linear-gradient(to right, #0a0a23, #1a1a3a); 
+            padding: 15px 10px; 
+            text-align: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+        }
+        nav { 
+            margin: 10px 0; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+        nav a { 
+            color: #00ff88; 
+            text-decoration: none; 
+            padding: 8px 12px; 
+            font-size: 0.9em; 
+            transition: color 0.3s; 
+            white-space: nowrap; /* Предотвращаем перенос */
+        }
+        nav a:hover { color: #ff0040; }
+        section { 
+            padding: 30px 15px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .hero { text-align: center; }
+        .hero h1 { font-size: 2em; margin-bottom: 10px; } /* Уменьшили для мобильных */
+        .hero h2 { font-size: 1.5em; }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            border-radius: 10px; 
+            padding: 15px; /* Уменьшили padding */
+            margin: 15px 0; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            transition: transform 0.3s; 
+            display: flex; 
+            flex-direction: column; /* Стек для мобильных */
+            align-items: flex-start; 
+            opacity: 0; 
+            animation: fadeIn 0.5s forwards; 
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card img { 
+            width: 60px; /* Уменьшили иконки */
+            height: 60px; 
+            margin-bottom: 10px; 
+            align-self: center; 
+            transition: transform 0.3s; 
+        }
+        .card:hover img { transform: rotate(360deg); }
+        .threat { border-left: 5px solid #ff0040; }
+        .safe { border-left: 5px solid #00ff88; }
+        button { 
+            background: #00ff88; 
+            color: #000; 
+            border: none; 
+            padding: 12px 24px; /* Увеличено для touch */
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background 0.3s; 
+            font-size: 1em; 
+            min-width: 200px; /* Минимум ширины */
+        }
+        button:hover { background: #ff0040; color: #fff; }
+        #quiz { display: none; }
+        #quiz form { display: flex; flex-direction: column; gap: 15px; }
+        #result { margin-top: 20px; padding: 20px; background: rgba(0,255,136,0.2); border-radius: 10px; }
+        footer { background: #1a1a3a; padding: 15px; text-align: center; font-size: 0.9em; }
+        .product-demo { text-align: center; margin: 20px 0; }
+        .product-demo video { max-width: 100%; border-radius: 10px; }
+        .product h2, .product h3, .stats h2, .benefits h2, .previous h2 { 
+            font-weight: 900; 
+            text-shadow: 0 0 10px #00ff88; 
+            color: #00ff88; 
+            font-size: 1.5em; /* Уменьшили */
+            margin-bottom: 15px; 
+        }
+        .product p, .stats p, .benefits p, .previous p { 
+            font-style: italic; 
+            font-weight: 300; 
+            margin: 10px 0; 
+        }
+        .product-story, .stats-story, .benefits-story, .previous-story { 
+            background: rgba(0,255,136,0.1); 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+            font-size: 1em; /* Уменьшили текст */
+            line-height: 1.6; 
+        }
+        .stats-card { background: rgba(255,0,64,0.2); border-left: 5px solid #ff0040; }
+        /* Формы: улучшения для мобильных */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #ccc;
+        }
+        label {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Медиа-запросы для мобильных */
+        @media (max-width: 768px) {
+            header { padding: 10px 5px; }
+            nav { 
+                flex-direction: column; 
+                gap: 5px; 
+                align-items: center; 
+            }
+            nav a { 
+                padding: 10px; 
+                width: 100%; 
+                text-align: center; 
+                max-width: 200px; 
+            }
+            section { padding: 20px 10px; }
+            .hero h1 { font-size: 1.8em; }
+            .hero h2 { font-size: 1.3em; }
+            .product h2, .stats h2, .benefits h2, .previous h2 { font-size: 1.3em; }
+            .card { 
+                padding: 12px; 
+                margin: 12px 0; 
+            }
+            .card img { width: 50px; height: 50px; }
+            button { 
+                padding: 15px 20px; 
+                font-size: 1.1em; 
+            }
+            .product-story, .stats-story, .benefits-story, .previous-story { 
+                padding: 12px; 
+                font-size: 0.95em; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5em; }
+            .hero h2 { font-size: 1.1em; }
+            .product h2, .stats h2, .benefits h2, .previous h2 { font-size: 1.2em; }
+            .card { padding: 10px; }
+            input, textarea { padding: 15px; font-size: 1.1em; } /* Увеличено для лёгкого ввода */
+            button { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI DateSecurity</h1>
+        <p>Ваш ИИ-щит от цифровых угроз</p>
+        <nav>
+            <a href="#home">Главная</a>
+            <a href="#product">Продукт</a>
+            <a href="#stats">Статистика</a>
+            <a href="#benefits">Как помогает</a>
+            <a href="#previous">Что было до</a>
+            <a href="#threats">Угрозы</a>
+            <a href="#guide">Памятка</a>
+            <a href="#quiz">Квиз</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h2>Добро пожаловать!</h2>
+        <p>В 2025 году ИИ — ваш лучший защитник. AI DateSecurity анализирует угрозы на устройстве, не передавая данные в облако.</p>
+        <button onclick="showQuiz()">Начать квиз: Проверьте навыки!</button>
+    </section>
+
+    <section id="product" class="product">
+        <h2>AI DateSecurity: Революция ИИ в защите</h2>
+        <div class="product-story">
+            <p><em>Представьте: вы открываете банковское app, и вдруг — ИИ-шепот: "Эта ссылка подозрительна, давай разберёмся?" Не фантастика, а реальность 2025. AI DateSecurity — ваш личный цифровой телохранитель, который учится на ходу и предугадывает хакерские трюки. Забудьте о пассивных антивирусах: здесь ИИ работает <strong>локально</strong>, на вашем смартфоне, как супергерой в тени.</em></p>
+        </div>
+        <div class="product-demo">
+            <h3>Как это работает? Шаг за шагом в действии</h3>
+            <div class="card safe">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMzUiIGZpbGw9IiMwMGZmODgiLz4KPHBhdGggZD0iTTIwIDQwIEwyMCAyMEw0MCAzMEw2MCAyMEw2MCA0MEw0MCA1MEwzMCA2MEwyMCA0MFoiIGZpbGw9IiNmZmYiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMCI+QW5hbHl6PC90ZXh0Pgo8L3N2Zz4K" alt="Анализ трафика">
+                <div>
+                    <h3>Анализ трафика: Глаз ИИ на каждый клик</h3>
+                    <p><em>Сценарий:</em> Вы получаете email с "акцией банка". ИИ сканирует URL, текст и паттерны в реальном времени (edge computing — без облака!). Распознаёт фишинг по 100+ признакам: опечатки, подозрительные домены. Блок! Задержка — всего 10 мс. Хакер в ярости: "Как он угадал?!"</p>
+                </div>
+            </div>
+            <div class="card safe">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMjUiIHk9IjI1IiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIGZpbGw9IiMwMGZmODgiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjQwIiBjeT0iNDAiIHI9IjIiIGZpbGw9IiNmZjAwNDAiLz4KPHRleHQgeD0iNDAiIHk9IjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMCI+U2VjdXJpdHk8L3RleHQ+Cjwvc3ZnPgo=" alt="Защита средств">
+                <div>
+                    <h3>Защита средств: Щит для вашего кошелька</h3>
+                    <p><em>Сценарий:</em> Необычный логин с IP в другой стране? ИИ предсказывает кражу по аномалиям поведения (ML на TensorFlow Lite). Замораживает транзакцию, уведомляет: "Подождите, это вы?" Точность 95% — ваши деньги в безопасности, без ложных тревог.</p>
+                </div>
+            </div>
+            <div class="card safe">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSIzMCIgcj0iMjUiIGZpbGw9IiMwMGZmODgiLz4KPHBhdGggZD0iTTMwIDQwIEwzMCA1MEw1MCA0MEw1MCA1MEwzMCA0MFoiIGZpbGw9IiNmZmYiLz4KPHRleHQgeD0iNDAiIHk9IjY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMCI+TGVhcm48L3RleHQ+Cjwvc3ZnPgo=" alt="Самообучение">
+                <div>
+                    <h3>Самообучение: ИИ растёт с вами</h3>
+                    <p><em>Сценарий:</em> За неделю ИИ адаптируется к вашим привычкам — меньше уведомлений о "нормальных" действиях. Плюс AR-уроки: "Проживите" атаку в приложении, выберите ход — и получите звезду за победу. Для банков: интеграция снижает фрод на 70%, охват миллионов клиентов.</p>
+                </div>
+            </div>
+            <!-- Placeholder для видео-демо: замените на реальное видео -->
+            <video controls width="400">
+                <source src="data:video/mp4;base64,..." type="video/mp4"> <!-- Добавьте base64 видео или внешнюю ссылку -->
+                Ваш браузер не поддерживает видео. Здесь демо: ИИ блокирует фишинг в реальном времени.
+            </video>
+        </div>
+    </section>
+
+    <section id="stats" class="stats">
+        <h2>Статистика краж в 2025: Масштаб проблемы</h2>
+        <div class="stats-story">
+            <p><em>Киберпреступления бьют рекорды: каждое третье преступление в России связано с интернетом. За январь-июль зарегистрировано 424,9 тыс. IT-преступлений, из них свыше 355 тыс. в сети. Глобальный ущерб — $10,5 трлн.</em></p>
+        </div>
+        <div class="card stats-card">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNmZjAwNDAiIG9wYWNpdHk9IjAuNSIvPjx0ZXh0IHg9IjQwIiB5PSI0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTIiPktyYXNoPC90ZXh0Pgo8L3N2Zz4K" alt="Статистика">
+            <div>
+                <h3>63 тыс. атак на компании</h3>
+                <p>С января по июнь 2025 — рост шпионских атак в 5 раз до 39%. Сложные атаки +13%.</p>
+            </div>
+        </div>
+        <div class="card stats-card">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwNDAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjQwIiB5PSI1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTIiPkRhdGE8L3RleHQ+Cjwvc3ZnPgo=" alt="Утечки">
+            <div>
+                <h3>24 млн записей утекло</h3>
+                <p>19 случаев распространения баз данных за январь-февраль. Раскрываемость — 28,9%.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="benefits">
+        <h2>Как AI DateSecurity борется с кражами</h2>
+        <div class="benefits-story">
+            <p><em>Наша разработка снижает риски на 70%: предиктивный анализ предотвращает 95% попыток, а локальное обучение минимизирует утечки. Вместо реакции — проактивная защита, экономя миллиарды для банков и спасая данные миллионов.</em></p>
+        </div>
+        <div class="card safe">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiMwMGZmODgiLz4KPHRleHQgeD0iNDAiIHk9IjQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+U2h0PC90ZXh0Pgo8L3N2Zz4K" alt="Борьба">
+            <div>
+                <h3>Предотвращение фишинга</h3>
+                <p>Реал-тайм блокировка подозрительных ссылок — минус 50% атак.</p>
+            </div>
+        </div>
+        <div class="card safe">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQwIDQwIEw0MCAyMEw2MCAyMEw0MCA0MEw2MCA2MEw0MCA0MFoiIGZpbGw9IiMwMGZmODgiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMCI+UG94PC90ZXh0Pgo8L3N2Zz4K" alt="Предикция">
+            <div>
+                <h3>Предсказание утечек</h3>
+                <p>Адаптация к поведению — защита от 39% шпионских атак.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="previous" class="previous">
+        <h2>Что было до AI DateSecurity</h2>
+        <div class="previous-story">
+            <p><em>Раньше — реактивные антивирусы и статичные памятки: мониторинг после факта, низкая вовлечённость. IT-преступления росли, несмотря на инвестиции, с раскрываемостью ниже 25%. Нет персонализации, данные в облаке — новые риски.</em></p>
+        </div>
+        <div class="card threat">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwNDAiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+T3RkPC90ZXh0Pgo8L3N2Zz4K" alt="Старое">
+            <div>
+                <h3>Реактивные системы</h3>
+                <p>Блокировка после кражи — 765 тыс. случаев в 2024.</p>
+            </div>
+        </div>
+        <div class="card threat">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNmZjAwNDAiLz4KPHRleHQgeD0iNDAiIHk9IjQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+UmVhY3Q8L3RleHQ+Cjwvc3ZnPgo=" alt="Облако">
+            <div>
+                <h3>Облачный мониторинг</h3>
+                <p>Передача данных — рост уязвимостей в 5 раз.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="threats">
+        <h2>Угрозы в сети: Истории из жизни</h2>
+        <p>Представьте: вы получаете "письмо от банка" с выигрышем. Клик — и ваши деньги ушли. Вот как хакеры охотятся, но мы расскажем, как перехитрить их!</p>
+        <div class="card threat">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNmZjAwNDAiLz4KPHBhdGggZD0iTTIwIDQwIEwxMCAyMEwyMCA0MEwxMCA2MEwyMCA0MFoiIGZpbGw9IiNmZmYiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+RW1haWw8L3RleHQ+Cjwvc3ZnPgo=" alt="Фишинг">
+            <div>
+                <h3>Фишинг: "Выиграй iPhone от банка!"</h3>
+                <p>Хакер маскируется под друга или банк, шлёт ссылку на фейковый сайт. Пример: В 2024 году 40% россиян кликнули на "подарок от банка" и потеряли 10к руб. <strong>Твой ход:</strong> Наведи курсор на ссылку — если URL кривой (bankk.ru), блокируй! Хакер злится: "Опять не клюнул..."</p>
+            </div>
+        </div>
+        <div class="card threat">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNmZjAwNDAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yMCAyMEwxMCAxMEwxMCA3MEwyMCA2MEwyMCAyMFoiIGZpbGw9InRyYW5zcGFyZW50IiBzdHJva2U9IiNmZmYiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+RDl0YSBXYXRlcjwvdGV4dD4KPC9zdmc+Cg==" alt="Утечка">
+            <div>
+                <h3>Утечки: "Пароль утёк, как вода из ведра"</h3>
+                <p>База данных взломана — ваши ФИО, паспорт и счёт на чёрном рынке. Факт: В 2025 году утечка из мессенджеров стоила клиентам банков миллионов. <strong>Твой ход:</strong> Меняй пароли ежемесячно, включи 2FA. Хакер: "Чёрт, этот щит ИИ не пробить!"</p>
+            </div>
+        </div>
+        <div class="card threat">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNmZjAwNDAiLz4KPHBhdGggZD0iTTIwIDQwIEwyMCAyMEw0MCAzMEw2MCAyMEw2MCA0MEw0MCA1MEwzMCA2MEwyMCA0MFoiIGZpbGw9IiNmZmYiLz4KPHRleHQgeD0iNDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+U29jU2V0czwvdGV4dD4KPC9zdmc+Cg==" alt="Соцсети">
+            <div>
+                <h3>Соцсети: "Лайк — и хакер знает твой адрес"</h3>
+                <p>Геотег на фото: "Я в кафе у Кремля". Хакеры используют для фишинга или кражи. Статистика: 25% атак начинаются с соцсетей. <strong>Твой ход:</strong> Выключи геолокацию, делись приватно. Хакер: "Без фото — без шанса!"</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="guide">
+        <h2>Памятка по шагам</h2>
+        <div class="card safe">
+            <h3>Шаг 1: Проверьте URL</h3>
+            <p>Всегда смотрите на адрес: https:// и без опечаток (g00gle.com — фейк).</p>
+        </div>
+        <div class="card safe">
+            <h3>Шаг 2: Включите 2FA</h3>
+            <p>Двухфакторная аутентификация — ключ от хакеров.</p>
+        </div>
+        <div class="card safe">
+            <h3>Шаг 3: Обновляйте ПО</h3>
+            <p>Патчи закрывают дыры. Автообновление — ваш друг.</p>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <h2>Квиз: Тестируйте себя</h2>
+        <form id="quizForm">
+            <p>1. Что такое фишинг?</p>
+            <label><input type="radio" name="q1" value="a"> Попытка украсть данные</label><br>
+            <label><input type="radio" name="q1" value="b"> Рыбалка в интернете</label><br>
+
+            <p>2. Нужно ли использовать 2FA?</p>
+            <label><input type="radio" name="q2" value="a"> Да, всегда</label><br>
+            <label><input type="radio" name="q2" value="b"> Нет, усложняет жизнь</label><br>
+
+            <p>3. Как проверить подозрительное письмо?</p>
+            <label><input type="radio" name="q3" value="a"> Кликнуть по ссылке</label><br>
+            <label><input type="radio" name="q3" value="b"> Проверить отправителя вручную</label><br>
+
+            <p>4. Что делать при утечке?</p>
+            <label><input type="radio" name="q4" value="a"> Игнорировать</label><br>
+            <label><input type="radio" name="q4" value="b"> Сменить пароли</label><br>
+
+            <p>5. Соцсети: делиться геотегом?</p>
+            <label><input type="radio" name="q5" value="a"> Да, для друзей</label><br>
+            <label><input type="radio" name="q5" value="b"> Нет, риски приватности</label><br>
+
+            <button type="button" onclick="checkQuiz()">Проверить!</button>
+        </form>
+        <div id="result"></div>
+    </section>
+
+    <section id="contact">
+        <h2>Контакты</h2>
+        <div class="card">
+            <p>Остались вопросы? Напишите нам — поможем разобраться!</p>
+        </div>
+        <form>
+            <input type="text" placeholder="Ваше имя" required><br>
+            <input type="email" placeholder="Email" required><br>
+            <textarea placeholder="Вопрос" required rows="4"></textarea><br>
+            <button type="button" onclick="alert('Спасибо! Ваш вопрос принят.')">Отправить</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 AI DateSecurity. Источники: Банк России, Роскомнадзор.</p>
+    </footer>
+
+    <script>
+        function showQuiz() {
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('quiz').scrollIntoView();
+        }
+
+        function checkQuiz() {
+            const form = document.getElementById('quizForm');
+            const answers = {
+                q1: 'a', q2: 'a', q3: 'b', q4: 'b', q5: 'b'
+            };
+            let score = 0;
+            for (let q in answers) {
+                const selected = form.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) score++;
+            }
+            const result = document.getElementById('result');
+            let msg = score === 5 ? 'Отлично! Вы эксперт по безопасности.' :
+                      score >= 3 ? 'Хорошо, но потренируйтесь.' : 'Время учиться!';
+            result.innerHTML = `<h3>Ваш результат: ${score}/5</h3><p>${msg}</p><p>Скачайте персональную памятку: <a href="#" onclick="alert('PDF отправлен на email!')">Скачать PDF</a></p>`;
+        }
+
+        // Smooth scroll для навигации
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
